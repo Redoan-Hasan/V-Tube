@@ -35,25 +35,27 @@ const handleCategory = async () =>{
     });
 }
 
+
 const handleCategoryId =async (categoryId ) =>{
     // const parseCategoryId = categoryId.toString();
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`)
     const data = await res.json();
     categoryDetails = data.data;
     // console.log(categoryId);
-    console.log(categoryDetails);
+    // console.log(categoryDetails);
     const categoryCardContainer = document.getElementById('categoryCardDetails');
     categoryCardContainer.innerHTML = '';
     
     if(categoryDetails.length === 0){
-        categoryCardContainer.classList.remove('grid');
-        categoryCardContainer.innerHTML = `
-        <div class=" mx-auto text-center flex flex-col justify-center items-center">
-            <img class="" src="Assets/Icon.png" alt="">
-            <h1 class ="text-4xl text-black font-bold">Oops!! Sorry, There is no content here</h1>
-        </div>
-        `;
-    }else{
+    categoryCardContainer.classList.remove("grid");
+    categoryCardContainer.innerHTML = `
+    <div class=" mx-auto text-center flex flex-col justify-center items-center">
+        <img class="" src="Assets/Icon.png" alt="">
+        <h1 class ="text-4xl text-black font-bold">Oops!! Sorry, There is no content here</h1>
+    </div>
+    `;
+    } 
+    else{
         categoryCardContainer.classList.add('grid');
         categoryDetails.forEach((category) =>{
             const div = document.createElement('div');
@@ -83,16 +85,22 @@ const handleCategoryId =async (categoryId ) =>{
                                 '<i class="fa-solid fa-circle-check text-blue-600 pl-2"></i>'
                                 :''
                             }</p>
-                            <p class="text-[#171717B3] text-sm font-normal ">${category.others.views}</p>
+                            <p class="text-[#171717B3] text-sm font-normal ">${category.others.views} views</p>
                         </div>
                     </div>
             </div>
         `;
             categoryCardContainer.appendChild(div);
         })
-    }
-    }
-
+    }}
+    const handleSort =()=>{
+        categoryDetails.sort((a,b)=>{
+            const c = parseInt(a.others.views)
+            const d = parseInt(b.others.views)
+            return d - c;
+        })
+        console.log(categoryDetails);
+    }    
+    
 
 handleCategory();
-
