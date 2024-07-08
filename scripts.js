@@ -41,8 +41,12 @@ const handleCategoryId =async (categoryId ) =>{
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`)
     const data = await res.json();
     categoryDetails = data.data;
+
+    showingCategoryDetails();
+}
     // console.log(categoryId);
     // console.log(categoryDetails);
+    const showingCategoryDetails =() =>{
     const categoryCardContainer = document.getElementById('categoryCardDetails');
     categoryCardContainer.innerHTML = '';
     
@@ -99,8 +103,8 @@ const handleCategoryId =async (categoryId ) =>{
             const d = parseInt(b.others.views)
             return d - c;
         })
-        console.log(categoryDetails);
-    }    
+        showingCategoryDetails();
+    }
     
 
 handleCategory();
